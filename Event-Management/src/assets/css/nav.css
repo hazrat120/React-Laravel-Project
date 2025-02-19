@@ -1,0 +1,7 @@
+.nav-hover li {
+  display: hide;
+}
+
+.nav-hover:hover li {
+  display: block;
+}
