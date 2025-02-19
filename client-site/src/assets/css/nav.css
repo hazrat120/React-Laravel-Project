@@ -3,5 +3,5 @@
 }
 
 .nav-hover:hover li {
-  display: block;
+  display: block !important;
 }

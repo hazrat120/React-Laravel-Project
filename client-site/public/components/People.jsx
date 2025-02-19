@@ -1,7 +1,52 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 function People() {
+  const [users, setUsers] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Fetch the data from the backend
+    axios
+      .get("http://localhost:8000/api/users")
+      .then((response) => {
+        // Assuming the response data is an array
+        setUsers(response.data);
+        setLoading(false); // Set loading to false once data is fetched
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the data:", error);
+        setLoading(false);
+      });
+  }, []); // Empty dependency array to run only once on component mount
+
   return (
-    <>
-      <div className="col-xl-7">
+    <div>
+      <h1>User List</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {users.length > 0 ? (
+            users.map((user) => (
+              <li key={user.id}>
+                <strong>Name:</strong> {user.name} <br />
+                <strong>Email:</strong> {user.email}
+              </li>
+            ))
+          ) : (
+            <p>No users available.</p>
+          )}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+export default People;
+
+{
+  /*  <div className="col-xl-7">
         <div className="peoples-photo text-center">
           <div className="row justify-content-center">
             <div className="col-auto">
@@ -198,9 +243,5 @@ function People() {
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </div> */
 }
-
-export default People;
